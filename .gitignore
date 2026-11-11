@@ -1,0 +1,14 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+.env
+data/*
+!data/.gitkeep
+results/*
+!results/gates/
+results/gates/*
+!results/gates/.gitkeep
+!results/gates/*.md
+!results/gates/*.json
+logs/*.log
+logs/*.err

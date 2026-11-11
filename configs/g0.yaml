@@ -1,0 +1,29 @@
+# ABS Gate G0 configuration. Thresholds under `gate:` are PRE-REGISTERED (2026-11-11).
+
+counts:
+  index: v4_olmo-mix-1124_llama   # OLMo-2 pretraining data on infini-gram
+  max_diff_tokens: 100
+  max_answers: 4                  # infini-gram API limit: at most 4 terms per OR clause
+
+sample:
+  per_bucket: 1000                # up to 1,000 facts per exposure bucket (about 7k facts in total)
+  seed: 0
+
+models:
+  base: {id: allenai/OLMo-2-1124-7B}
+  instruct: {id: allenai/OLMo-2-1124-7B-Instruct}
+smoke_models:
+  base: {id: Qwen/Qwen2.5-0.5B}
+  instruct: {id: Qwen/Qwen2.5-0.5B-Instruct}
+
+generation:
+  base_n_samples: 10              # self-consistency confidence for the matched-coverage baseline
+
+gate:
+  tail_buckets: ["1", "2"]
+  primary_variant: S1_plain       # the instruct model as shipped
+  min_facts_per_tail_bucket: 400
+  min_base_acc_tail: 0.15
+  min_tail_losses: 30
+  go_tail_tax: 1.5                # and the 95% CI lower bound must exceed 1.0
+  fold_tail_tax: 1.2
